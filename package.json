@@ -1,0 +1,19 @@
+{
+  "name": "user-profile",
+  "version": "1.0.0",
+  "description": "user profile using nodejs side serve",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luckycungwa/user-profile.git"
+  },
+  "author": "l cungwa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luckycungwa/user-profile/issues"
+  },
+  "homepage": "https://github.com/luckycungwa/user-profile#readme"
+}

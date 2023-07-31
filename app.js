@@ -25,7 +25,7 @@ function login(email, password) {
             console.log(resolve({ userId: 1, username: "user123" }));
           
         } else {
-            console.log(reject(new Error("Invalid email or password.")));
+            console.log(reject(new Error("Invalid email or password. TRY AGAIN!")));
         }
       }, 1000);
     });
@@ -76,9 +76,13 @@ function recordUserData() {
       output: process.stdout,
     });
   
-    return new Promise((resolve) => {
-      // HINT for test purposes
-      console.log("email: user@company.com | pass: password")
+    return new Promise((resolve, next) => {
+      // HINT for test purposes | display for 3s then proceed
+      // setTimeout(()=>{
+      //   console.log("email: user@company.com | pass: password")
+      // }, 3000 )
+      // next();
+      
       
       // arg email & password | resolve
       rl.question("Enter your email: ", (email) => {
@@ -99,7 +103,8 @@ function recordUserData() {
       logRunPoints();
   
       // Record user data using CLI | prompt for credentials before providing data (img & vid)
-      console.log("Enter login details below: ");
+      console.log("Please login to proceed: HINT email: user@company.com | pass: password");
+      // console.log("email: user@company.com | pass: password")
       const { email, password } = await recordUserData();
       // console successful log in
       console.log("Logging in..."); 

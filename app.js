@@ -1,5 +1,7 @@
 // SERVING EFFICIENTLY WITHOUT ADDING MORE HARDWARE
 
+// THIS IS PURE nodeJS | might wanna test in Express (framework)
+
 //MANAGE APP START & END as per assessment equest
 // Function to log 'start' and 'end' points'
 function logRunPoints() {
@@ -14,11 +16,12 @@ const readline = require("readline");       //record user input
 
 // Async login  function | taking email + pass
 function login(email, password) {
-    
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         // Resolve when cdentials match otherwise reject
+        // USING CUSTOM CREDENTIALS since the Assessment did not mention the use of database & user data storage
         if (email === "user@company.com" && password === "password") {
+
             console.log(resolve({ userId: 1, username: "user123" }));
           
         } else {
@@ -28,40 +31,45 @@ function login(email, password) {
     });
   }
 
-//   Gte user profile images for ARRAY
+  // FOR TEST PURPOSE
+
+ // //   Gte user profile images for ARRAY
 function getUserImages(userId) {
 
     return new Promise((resolve) => {
       setTimeout(() => {
-        // Assuming user images are stored in an array for simplicity
+        // STORING IMAGE IN AN ARRAY
         const images = [
-          "image1.jpg",
-          "image2.png",
-          "image3.jpg",
-        //   etc....
+          // accept png & jpg
+          "./img/image1.png",
+          "./img/image2.png",
+          "./img/image3.png",
+          "./img/image4.png",
         ];
         resolve(images);
-      }, 1500);
+      }, 1500); //get images 1.5s
     });
   }
 
-//   GET USER VIDEOS ????
+//   GET USER VIDEOS
   function getUserVideos(userId) {
     return new Promise((resolve) => {
       setTimeout(() => {
         // STORE VIDEOS IN ARRAY
         const videos = [
+          // formarts mp4, 3gp, avi etc
           "video1.mp4",
           "video2.3gp",
           "video3.avi",
+          "video4.mov",
         ];
         resolve(videos);
-      }, 2000);
+      }, 2000); //get images 2s (delayed 5ms after the images)
     });
   }
 
-//   MAIN COMPONENTS OF THE APP FUNCTION
-// rECORD USER EMAIL & PASSWORD 
+//  MAIN COMPONENTS OF THE APP FUNCTION
+// RECORD USER INPUTS | READLINE
 function recordUserData() {
     const rl = readline.createInterface({
       input: process.stdin,
@@ -69,40 +77,47 @@ function recordUserData() {
     });
   
     return new Promise((resolve) => {
+      // HINT for test purposes
+      console.log("email: user@company.com | pass: password")
+      
+      // arg email & password | resolve
       rl.question("Enter your email: ", (email) => {
         rl.question("Enter your password: ", (password) => {
-          rl.close();
+          rl.close();   //CLOSE WINDOW IF CREDENTIALS ARE INCORRECT | prevent hanging
           resolve({ email, password });
+          // resolve.end();
         });
       });
     });
   }
   
+  // MAIN APP FUNCTION
   async function main() {
+    // LOG ALL THE DATA AND CATCH ANY ERRORS
     try {
         // INITIALIZE BY RECORDING THE APP HAS STARTED ETC.
       logRunPoints();
   
-      // Record user data using CLI
-      console.log("Provide email & password to login:");
+      // Record user data using CLI | prompt for credentials before providing data (img & vid)
+      console.log("Enter login details below: ");
       const { email, password } = await recordUserData();
-  
-      // user logged in with emaill and correct pass
-      console.log("Logging in...");
+      // console successful log in
+      console.log("Logging in..."); 
       const user = await login(email, password);
-      console.log("Login successful!");
+      console.log("Login successful!"); 
   
       // Get user images after login
       console.log("Loading images...");
       const images = await getUserImages(user.userId);
       console.log("User images:", images);
   
-      // Get user videos after images
+      // Get user videos 0.5s after images
       console.log("Loading videos...");
       const videos = await getUserVideos(user.userId);
       console.log("User videos:", videos);
   
-      console.log("APP LAUNCHED SUCCESFULLY!");
+      // lastly exacute: message after the app has launched and ran successfully
+      console.log("APP HAS RAN SUCCESSFULLY!");
       //else log error
     } catch (error) {
        
@@ -110,5 +125,5 @@ function recordUserData() {
     }
   }
   
-//   RUN THE APP
+//   EXECUTE MAIN FUNCTION
   main();
